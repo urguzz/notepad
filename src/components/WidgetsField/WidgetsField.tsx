@@ -12,13 +12,13 @@ function WidgetList() {
   const notes: Array<ReactNode> = [];
   notesData?.forEach((note, index) => {
     notes.push(
-      <Col span={8} key={index} className={styles.widget}>
+      <Col span={8} key={index} className={styles.widgetListCol}>
         <NoteWidget note={note} />
       </Col>
     );
   });
   return (
-    <Row gutter={16} justify="space-around" className={styles.widgetList}>
+    <Row gutter={16} justify="space-around" className={styles.widgetListRow}>
       {notes}
     </Row>
   );
