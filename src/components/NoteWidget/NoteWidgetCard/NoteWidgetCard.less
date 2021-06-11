@@ -1,0 +1,35 @@
+.card {
+  height: 100%;
+  margin: 0;
+  padding: 0 30px;
+
+  background-color: rgba(255, 255, 255, 0.44);
+  backdrop-filter: blur(3px);
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+
+  :global .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    height: 100%;
+
+    .text-wrapper {
+      flex-grow: 0;
+
+      h2 {
+        text-align: center;
+        margin-bottom: 0;
+      }
+
+      hr {
+        margin-top: 0;
+      }
+
+      p {
+        font-size: medium;
+      }
+    }
+  }
+}

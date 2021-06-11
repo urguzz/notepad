@@ -12,7 +12,7 @@ module.exports = {
         },
         customizeTheme: {
           "@primary-color": "#263238",
-          "@secondary-color": "#b2fef7",
+          "@secondary-color": "#80cbc4",
         },
         babelPluginImportOptions: {
           libraryDirectory: "es",

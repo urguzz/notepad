@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import Note from "../components/NoteWidget/Note/Note";
+import Note from "../components/NoteWidget/NoteWidgetCard/Note/Note";
 
 export interface NotesState {
   notes: Note[];
@@ -31,11 +31,13 @@ const initialState: NotesState = {
     },
     {
       title: "6",
-      content: "qweqweqweqweqweqweq wqweqweqweqweqweqweqw weqewqqewqweqweqweqw eqweqweqweqewqqewqw eqweqweqweqweqweqweqew qqeweqewqqew",
+      content:
+        "qweqweqweqweqweqweq wqweqweqweqweqweqweqw weqewqqewqweqweqweqw eqweqweqweqewqqewqw eqweqweqweqweqweqweqew qqeweqewqqew",
     },
     {
       title: "7",
-      content: "qweqweqweqewqqewqeqw eqweqweqweqewqqewq weqweqweqweqweqweqw eqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew",
+      content:
+        "qweqweqweqewqqewqeqw eqweqweqweqewqqewq weqweqweqweqweqweqw eqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew weqweqewqqew",
     },
     {
       title: "8",
@@ -67,11 +69,13 @@ const initialState: NotesState = {
     },
     {
       title: "15",
-      content: "qweqweqweqweqweqweq wqweqweqweqweqweqweqw weqewqqewqweqweqweqw eqweqweqweqewqqewqw eqweqweqweqweqweqweqew qqeweqewqqew",
+      content:
+        "qweqweqweqweqweqweq wqweqweqweqweqweqweqw weqewqqewqweqweqweqw eqweqweqweqewqqewqw eqweqweqweqweqweqweqew qqeweqewqqew",
     },
     {
       title: "16",
-      content: "qweqweqweqewqqewqeqw eqweqweqweqewqqewq weqweqweqweqweqweqw eqewqqew",
+      content:
+        "qweqweqweqewqqewqeqw eqweqweqweqewqqewq weqweqweqweqweqweqw eqewqqew",
     },
     {
       title: "17",

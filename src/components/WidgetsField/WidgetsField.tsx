@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { Col, Row } from "antd";
 
 import { selectNotes } from "../../selectors/notes";
+import NoteWidget from "../NoteWidget/NoteWidget";
 
 import styles from "./WidgetsField.less";
-import NoteWidget from "../NoteWidget/NoteWidget";
 
 function WidgetList() {
   const notesData = useSelector(selectNotes);
@@ -13,7 +13,7 @@ function WidgetList() {
   notesData?.forEach((note, index) => {
     notes.push(
       <Col span={8} key={index} className={styles.widgetListCol}>
-        <NoteWidget note={note} />
+        <NoteWidget note={note} noteId={index} />
       </Col>
     );
   });

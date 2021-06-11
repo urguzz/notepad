@@ -1,52 +1,35 @@
-import { Button, Card } from "antd";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
-import Note from "./Note/Note";
+import Note from "./NoteWidgetCard/Note/Note";
+import NoteWidgetCard from "./NoteWidgetCard/NoteWidgetCard";
+import ActionButtons from "./ActionButtons/ActionButtons";
 
 import styles from "./NoteWidget.less";
-import { useState } from "react";
 
 interface IProps {
   note: Note;
+  noteId: number;
 }
 function NoteWidget(props: IProps) {
-  const { title, content } = props.note;
+  const { note, noteId } = props;
   const [style, setStyle] = useState({ opacity: 0 });
+
+  const handleMouseEnter = () => {
+    setStyle({ opacity: 1 });
+  };
+
+  const handleMouseLeave = () => {
+    setStyle({ opacity: 0 });
+  };
 
   return (
     <div
       className={styles.widget}
-      onMouseEnter={() => {
-        setStyle({ opacity: 1 });
-      }}
-      onMouseLeave={() => {
-        setStyle({ opacity: 0 });
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <Card className={styles.card}>
-        <div className="text-wrapper">
-          <h2>{title}</h2>
-          <hr />
-          <p>{content}</p>
-        </div>
-      </Card>
-      <div className={styles.actionButtons} style={style}>
-        <Button
-          className={styles.actionButton}
-          type="primary"
-          icon={<PlusOutlined />}
-          shape="circle"
-          size="large"
-        />
-        <Button
-          className={styles.actionButton}
-          danger
-          type="primary"
-          icon={<DeleteOutlined />}
-          shape="circle"
-          size="large"
-        />
-      </div>
+      <NoteWidgetCard note={note} />
+      <ActionButtons noteId={noteId} style={style} />
     </div>
   );
 }
