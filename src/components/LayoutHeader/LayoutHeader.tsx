@@ -9,9 +9,7 @@ import styles from "./LayoutHeader.less";
 function LayoutHeader() {
   const dispatch = useAppDispatch();
   const handleAddNote = () => {
-    dispatch(
-      addNote({ noteToAdd: { title: "New note", content: "Note content" } })
-    );
+    dispatch(addNote({ noteTitle: "New note", noteContent: "Note content" }));
   };
   return (
     <Header className={styles.header}>

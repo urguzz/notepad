@@ -10,10 +10,10 @@ import styles from "./WidgetsField.less";
 function WidgetList() {
   const notesData = useSelector(selectNotes);
   const notes: Array<ReactNode> = [];
-  notesData?.forEach((note, index) => {
+  notesData?.forEach(note => {
     notes.push(
-      <Col span={8} key={index} className={styles.widgetListCol}>
-        <NoteWidget note={note} noteId={index} />
+      <Col span={8} key={note.index} className={styles.widgetListCol}>
+        <NoteWidget note={note}/>
       </Col>
     );
   });

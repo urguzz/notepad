@@ -1,33 +1,49 @@
 import { Button } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 
 import { deleteNote } from "../../../reducers/notes";
 import { useAppDispatch } from "../../../store";
 
 import styles from "./ActionButtons.less";
+import Note from "../NoteWidgetCard/Note/Note";
 
 interface IProps {
-  noteId: number;
+  note: Note;
+  isEdited: boolean;
+  onEdit: (editState: boolean) => void;
   style: {
     opacity: number;
   };
 }
 
 function ActionButtons(props: IProps) {
-  const { style, noteId } = props;
+  const { style, note, onEdit, isEdited } = props;
   const dispatch = useAppDispatch();
   const handleDeleteNote = () => {
-    dispatch(deleteNote({ indexOfNoteToDelete: noteId }));
+    dispatch(deleteNote({ indexOfNoteToDelete: note.index }));
   };
   return (
     <div className={styles.actionButtons} style={style}>
-      <Button
-        className={styles.actionButton}
-        type="primary"
-        icon={<EditOutlined />}
-        shape="circle"
-        size="large"
-      />
+      {isEdited ? (
+        <Button
+          className={`${styles.actionButton} ${styles.actionConfirmButton}`}
+          type="primary"
+          icon={<CheckOutlined />}
+          shape="circle"
+          size="large"
+          onClick={() => onEdit(false)}
+        />
+      ) : (
+        <Button
+          className={styles.actionButton}
+          type="primary"
+          icon={<EditOutlined />}
+          shape="circle"
+          size="large"
+          onClick={() => onEdit(true)}
+        />
+      )}
+
       <Button
         className={styles.actionButton}
         danger

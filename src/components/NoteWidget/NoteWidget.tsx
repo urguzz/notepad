@@ -8,11 +8,11 @@ import styles from "./NoteWidget.less";
 
 interface IProps {
   note: Note;
-  noteId: number;
 }
+
 function NoteWidget(props: IProps) {
-  const { note, noteId } = props;
   const [style, setStyle] = useState({ opacity: 0 });
+  const [isEdited, setIsEdited] = useState(false);
 
   const handleMouseEnter = () => {
     setStyle({ opacity: 1 });
@@ -28,8 +28,13 @@ function NoteWidget(props: IProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <NoteWidgetCard note={note} />
-      <ActionButtons noteId={noteId} style={style} />
+      <NoteWidgetCard note={props.note} isEdited={isEdited} />
+      <ActionButtons
+        note={props.note}
+        style={style}
+        isEdited={isEdited}
+        onEdit={setIsEdited}
+      />
     </div>
   );
 }

@@ -10,80 +10,29 @@ const initialState: NotesState = {
   //notes: [],
   notes: [
     {
+      index: 0,
       title: "1",
       content: "qweqweqew",
     },
     {
+      index: 1,
       title: "2",
-      content: "qweqweqweqweqwe qweqweqewqqewqweqweqw eqweqweqweqweqewqqew",
+      content: "qweqweqweqweqwe qweqweqewqqewqweqweqw eqweqweqweqweqewqqew  eqweqweqweqweqewqqew  eqweqweqweqweqewqqew eqweqweqweqweqewqqew  eqweqweqweqweqewqqew",
     },
     {
+      index: 2,
       title: "3",
       content: "qweqweq weqweqweqweqwe qewqqew",
     },
     {
+      index: 3,
       title: "4",
       content: "qweqweqwe qweqweqweqwe qewqqew",
     },
     {
+      index: 4,
       title: "5",
-      content: "qweqweqw eqweqweqweqweq ewqqew",
-    },
-    {
-      title: "6",
-      content:
-        "qweqweqweqweqweqweq wqweqweqweqweqweqweqw weqewqqewqweqweqweqw eqweqweqweqewqqewqw eqweqweqweqweqweqweqew qqeweqewqqew",
-    },
-    {
-      title: "7",
-      content:
-        "qweqweqweqewqqewqeqw eqweqweqweqewqqewq weqweqweqweqweqweqw eqewqqew qweqweqweqweqweq weqweqewqqew qweqweqweqweqweq weqweqewqqew weqweqewqqew",
-    },
-    {
-      title: "8",
-      content: "qweqweqweqweqweq weqweqewqqew",
-    },
-    {
-      title: "9",
-      content: "qweqweq weqweqweqweqw eqewqqew",
-    },
-    {
-      title: "10",
-      content: "qweqweqew",
-    },
-    {
-      title: "11",
-      content: "qweqweqweqweqwe qweqweqewqqewqweqweqw eqweqweqweqweqewqqew",
-    },
-    {
-      title: "12",
-      content: "qweqweq weqweqweqweqwe qewqqew",
-    },
-    {
-      title: "13",
-      content: "qweqweqwe qweqweqweqwe qewqqew",
-    },
-    {
-      title: "14",
-      content: "qweqweqw eqweqweqweqweq ewqqew",
-    },
-    {
-      title: "15",
-      content:
-        "qweqweqweqweqweqweq wqweqweqweqweqweqweqw weqewqqewqweqweqweqw eqweqweqweqewqqewqw eqweqweqweqweqweqweqew qqeweqewqqew",
-    },
-    {
-      title: "16",
-      content:
-        "qweqweqweqewqqewqeqw eqweqweqweqewqqewq weqweqweqweqweqweqw eqewqqew",
-    },
-    {
-      title: "17",
-      content: "qweqweqweqweqweq weqweqewqqew",
-    },
-    {
-      title: "18",
-      content: "qweqweq weqweqweqweqw eqewqqew",
+      content: "qweqweqw eqweqweqweqweq ewqqew  eqweqweqweqweqewqqew  eqweqweqweqweqewqqew eqweqweqweqweqewqqew  eqweqweqweqweqewqqew",
     },
   ],
 };
@@ -97,11 +46,26 @@ export const spentsDataSlice = createSlice({
       action: {
         type: string;
         payload: {
-          noteToAdd: Note;
+          noteTitle: string;
+          noteContent: string;
         };
       }
     ) => {
-      state.notes.push(action.payload.noteToAdd);
+      const { noteTitle, noteContent } = action.payload;
+      const indexes = new Set<number>();
+      state.notes.forEach((note) => indexes.add(note.index));
+      let indexOfNoteToAdd = 0;
+      indexes.forEach(() => {
+        if (!indexes.has(indexOfNoteToAdd)) {
+          return;
+        }
+        indexOfNoteToAdd++;
+      });
+      state.notes.push({
+        index: indexOfNoteToAdd,
+        title: noteTitle,
+        content: noteContent,
+      });
     },
     deleteNote: (
       state,
@@ -112,10 +76,50 @@ export const spentsDataSlice = createSlice({
         };
       }
     ) => {
-      state.notes.splice(action.payload.indexOfNoteToDelete, 1);
+      state.notes = state.notes.filter(
+        (note) => note.index !== action.payload.indexOfNoteToDelete,
+        1
+      );
+    },
+    editNoteTitle: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          newTitle: string;
+          indexOfNoteToEdit: number;
+        };
+      }
+    ) => {
+      const { newTitle, indexOfNoteToEdit } = action.payload;
+      const noteIndex = state.notes.findIndex(
+        (note) => note.index === indexOfNoteToEdit
+      );
+      if (noteIndex !== -1) {
+        state.notes[noteIndex].title = newTitle;
+      }
+    },
+    editNoteContent: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          newContent: string;
+          indexOfNoteToEdit: number;
+        };
+      }
+    ) => {
+      const { newContent, indexOfNoteToEdit } = action.payload;
+      const noteIndex = state.notes.findIndex(
+        (note) => note.index === indexOfNoteToEdit
+      );
+      if (noteIndex !== -1) {
+        state.notes[noteIndex].content = newContent;
+      }
     },
   },
 });
 
-export const { addNote, deleteNote } = spentsDataSlice.actions;
+export const { addNote, deleteNote, editNoteTitle, editNoteContent } =
+  spentsDataSlice.actions;
 export default spentsDataSlice.reducer;
