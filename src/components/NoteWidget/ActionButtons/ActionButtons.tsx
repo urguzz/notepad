@@ -3,9 +3,9 @@ import { EditOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 
 import { deleteNote } from "../../../reducers/notes";
 import { useAppDispatch } from "../../../store";
+import Note from "../NoteWidgetCard/Note/Note";
 
 import styles from "./ActionButtons.less";
-import Note from "../NoteWidgetCard/Note/Note";
 
 interface IProps {
   note: Note;
@@ -19,9 +19,11 @@ interface IProps {
 function ActionButtons(props: IProps) {
   const { style, note, onEdit, isEdited } = props;
   const dispatch = useAppDispatch();
+
   const handleDeleteNote = () => {
     dispatch(deleteNote({ indexOfNoteToDelete: note.index }));
   };
+
   return (
     <div className={styles.actionButtons} style={style}>
       {isEdited ? (
