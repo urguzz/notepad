@@ -7,34 +7,7 @@ export interface NotesState {
 }
 
 const initialState: NotesState = {
-  //notes: [],
-  notes: [
-    {
-      index: 0,
-      title: "1",
-      content: "qweqweqew",
-    },
-    {
-      index: 1,
-      title: "2",
-      content: "qweqweqweqweqwe qweqweqewqqewqweqweqw eqweqweqweqweqewqqew  eqweqweqweqweqewqqew  eqweqweqweqweqewqqew eqweqweqweqweqewqqew  eqweqweqweqweqewqqew",
-    },
-    {
-      index: 2,
-      title: "3",
-      content: "qweqweq weqweqweqweqwe qewqqew",
-    },
-    {
-      index: 3,
-      title: "4",
-      content: "qweqweqwe qweqweqweqwe qewqqew",
-    },
-    {
-      index: 4,
-      title: "5",
-      content: "qweqweqw eqweqweqweqweq ewqqew  eqweqweqweqweqewqqew  eqweqweqweqweqewqqew eqweqweqweqweqewqqew  eqweqweqweqweqewqqew",
-    },
-  ],
+  notes: [],
 };
 
 export const spentsDataSlice = createSlice({
