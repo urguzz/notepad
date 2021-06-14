@@ -3,17 +3,17 @@ import { useSelector } from "react-redux";
 import { Col, Row } from "antd";
 
 import { selectNotes } from "../../selectors/notes";
-import NoteWidget from "../NoteWidget/NoteWidget";
+import NoteWidget from "./NoteWidget/NoteWidget";
 
 import styles from "./WidgetsField.less";
 
 function WidgetList() {
   const notesData = useSelector(selectNotes);
   const notes: Array<ReactNode> = [];
-  notesData?.forEach(note => {
+  notesData?.forEach((note) => {
     notes.push(
       <Col span={8} key={note.index} className={styles.widgetListCol}>
-        <NoteWidget note={note}/>
+        <NoteWidget note={note} />
       </Col>
     );
   });

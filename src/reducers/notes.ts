@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import Note from "../components/NoteWidget/NoteWidgetCard/Note/Note";
+import Note from "../components/WidgetsField/NoteWidget/NoteWidgetCard/Note/Note";
 
 export interface NotesState {
   notes: Note[];

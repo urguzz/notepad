@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0 20px;
 
+  transition: 0.75s;
   background-color: rgba(255, 255, 255, 0.6);
   //backdrop-filter: blur(3px);
   border: none;
@@ -16,7 +17,7 @@
     height: 100%;
 
     .text-wrapper {
-      flex-grow: 0;
+      text-align: center;
 
       h2 {
         text-align: center;
@@ -36,16 +37,19 @@
 }
 
 .cardEdited {
-  background-color: rgba(240, 240, 240, 0.6);
-}
+  background-color: rgba(38, 50, 56, 0.8);
 
-textarea,
-input {
-  background: none !important;
-  border: none !important;
-  height: max-content;
-}
+  textarea,
+  input {
+    text-align: center;
+    background: none !important;
+    border: none !important;
+    height: max-content;
+    color: white;
+    font-size: medium;
+  }
 
-textarea {
-  resize: none;
+  textarea {
+    resize: none;
+  }
 }

@@ -1,8 +1,16 @@
-.App {
+.App,
+.content {
   height: 100%;
-  text-align: center;
-  font-size: xx-large;
+}
 
+.App {
   display: flex;
   flex-direction: column;
+
+  .content {
+    background-image: url(https://skraber.ru/wp-content/uploads/2020/06/double-bubble-outline.png);
+    flex-grow: 1;
+    min-height: auto;
+    margin: 0;
+  }
 }

@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import { EditOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 
-import { deleteNote } from "../../../reducers/notes";
-import { useAppDispatch } from "../../../store";
+import { deleteNote } from "../../../../reducers/notes";
+import { useAppDispatch } from "../../../../store";
 import Note from "../NoteWidgetCard/Note/Note";
 
 import styles from "./ActionButtons.less";

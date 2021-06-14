@@ -1,57 +1,44 @@
 import { Card, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React from "react";
-import { editNoteContent, editNoteTitle } from "../../../reducers/notes";
-import { useAppDispatch } from "../../../store";
 
 import Note from "./Note/Note";
 
 import styles from "./NoteWidgetCard.less";
 
 interface IProps {
+  onEditTitle: (title: string) => void;
+  onEditContent: (content: string) => void;
   note: Note;
   isEdited: boolean;
 }
 
 function NoteWidgetCard(props: IProps) {
-  const dispatch = useAppDispatch();
-  const { note, isEdited } = props;
+  const { note, isEdited, onEditContent, onEditTitle } = props;
   const { title, content } = note;
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const title = event.target.value;
-    if (title) {
-      dispatch(
-        editNoteTitle({
-          newTitle: event.target.value,
-          indexOfNoteToEdit: note.index,
-        })
-      );
+  const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      onEditTitle(event.target.value);
     }
   };
 
-  const handleContentChange = (
+  const handleOnChangeContent = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const content = event.target.value;
-    if (content) {
-      dispatch(
-        editNoteContent({
-          newContent: event.target.value,
-          indexOfNoteToEdit: note.index,
-        })
-      );
+    if (event.target.value) {
+      onEditContent(event.target.value);
     }
   };
 
   return isEdited ? (
     <Card className={`${styles.card} ${styles.cardEdited}`}>
       <div className="text-wrapper">
-        <Input defaultValue={title} onChange={handleTitleChange} />
+        <Input defaultValue={title} onChange={handleOnChangeTitle} />
         <hr />
         <TextArea
           defaultValue={content}
-          onChange={handleContentChange}
+          onChange={handleOnChangeContent}
           rows={6}
           autoSize={true}
         />
