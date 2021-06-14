@@ -7,19 +7,18 @@ import Note from "./Note/Note";
 import styles from "./NoteWidgetCard.less";
 
 interface IProps {
-  onEditTitle: (title: string) => void;
-  onEditContent: (content: string) => void;
+  onEditNote: (editedNote: Note) => void;
   note: Note;
-  isEdited: boolean;
+  isEditModeEnabled: boolean;
 }
 
 function NoteWidgetCard(props: IProps) {
-  const { note, isEdited, onEditContent, onEditTitle } = props;
+  const { note, isEditModeEnabled: isEdited, onEditNote } = props;
   const { title, content } = note;
 
   const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      onEditTitle(event.target.value);
+      onEditNote({ ...note, title: event.target.value });
     }
   };
 
@@ -27,7 +26,7 @@ function NoteWidgetCard(props: IProps) {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     if (event.target.value) {
-      onEditContent(event.target.value);
+      onEditNote({ ...note, content: event.target.value });
     }
   };
 

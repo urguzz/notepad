@@ -1,5 +1,10 @@
 import { Button } from "antd";
-import { EditOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  CheckOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 
 import { deleteNote } from "../../../../reducers/notes";
 import { useAppDispatch } from "../../../../store";
@@ -9,15 +14,15 @@ import styles from "./ActionButtons.less";
 
 interface IProps {
   note: Note;
-  isEdited: boolean;
-  onEdit: (editState: boolean) => void;
+  isEditModeEnabled: boolean;
+  onChangeEditMode: (editModeEnabled: boolean, applyChanges: boolean) => void;
   style: {
     opacity: number;
   };
 }
 
 function ActionButtons(props: IProps) {
-  const { style, note, onEdit, isEdited } = props;
+  const { style, note, onChangeEditMode, isEditModeEnabled } = props;
   const dispatch = useAppDispatch();
 
   const handleDeleteNote = () => {
@@ -26,35 +31,48 @@ function ActionButtons(props: IProps) {
 
   return (
     <div className={styles.actionButtons} style={style}>
-      {isEdited ? (
-        <Button
-          className={`${styles.actionButton} ${styles.actionConfirmButton}`}
-          type="primary"
-          icon={<CheckOutlined />}
-          shape="circle"
-          size="large"
-          onClick={() => onEdit(false)}
-        />
-      ) : (
-        <Button
-          className={styles.actionButton}
-          type="primary"
-          icon={<EditOutlined />}
-          shape="circle"
-          size="large"
-          onClick={() => onEdit(true)}
-        />
-      )}
+      {isEditModeEnabled ? (
+        <>
+          <Button
+            className={`${styles.actionButton} ${styles.actionConfirmButton}`}
+            type="primary"
+            icon={<CheckOutlined />}
+            shape="circle"
+            size="large"
+            onClick={() => onChangeEditMode(false, true)}
+          />
 
-      <Button
-        className={styles.actionButton}
-        danger
-        type="primary"
-        icon={<DeleteOutlined />}
-        shape="circle"
-        size="large"
-        onClick={handleDeleteNote}
-      />
+          <Button
+            className={styles.actionButton}
+            danger
+            type="primary"
+            icon={<CloseOutlined />}
+            shape="circle"
+            size="large"
+            onClick={() => onChangeEditMode(false, false)}
+          />
+        </>
+      ) : (
+        <>
+          <Button
+            className={styles.actionButton}
+            type="primary"
+            icon={<EditOutlined />}
+            shape="circle"
+            size="large"
+            onClick={() => onChangeEditMode(true, false)}
+          />
+          <Button
+            className={styles.actionButton}
+            danger
+            type="primary"
+            icon={<DeleteOutlined />}
+            shape="circle"
+            size="large"
+            onClick={handleDeleteNote}
+          />
+        </>
+      )}
     </div>
   );
 }

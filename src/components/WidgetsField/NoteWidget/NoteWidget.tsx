@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAppDispatch } from "../../../store";
-import { editNoteContent, editNoteTitle } from "../../../reducers/notes";
+import { editNote } from "../../../reducers/notes";
 import Note from "./NoteWidgetCard/Note/Note";
 import NoteWidgetCard from "./NoteWidgetCard/NoteWidgetCard";
 import ActionButtons from "./ActionButtons/ActionButtons";
@@ -13,10 +13,14 @@ interface IProps {
 }
 
 function NoteWidget(props: IProps) {
-  const note = props.note;
   const dispatch = useAppDispatch();
   const [isActionButtonsVisible, setIsActionButtonsVisible] = useState(0);
-  const [isEdited, setIsEdited] = useState(false);
+  const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
+  const [note, setNote] = useState(props.note);
+
+  useEffect(() => {
+    setNote(props.note);
+  }, [props.note]);
 
   const handleMouseEnter = () => {
     setIsActionButtonsVisible(1);
@@ -26,22 +30,25 @@ function NoteWidget(props: IProps) {
     setIsActionButtonsVisible(0);
   };
 
-  const handleTitleChange = (title: string) => {
-    dispatch(
-      editNoteTitle({
-        newTitle: title,
-        indexOfNoteToEdit: note.index,
-      })
-    );
+  const handleOnChangeEditMode = (
+    editModeEnabled: boolean,
+    applyChanges: boolean
+  ) => {
+    setIsEditModeEnabled(editModeEnabled);
+    if (applyChanges) {
+      dispatch(
+        editNote({
+          editedNote: note,
+          indexOfNoteToEdit: note.index,
+        })
+      );
+    } else {
+      setNote(props.note);
+    }
   };
 
-  const handleContentChange = (content: string) => {
-    dispatch(
-      editNoteContent({
-        newContent: content,
-        indexOfNoteToEdit: note.index,
-      })
-    );
+  const handleEditNote = (note: Note) => {
+    setNote(note);
   };
 
   return (
@@ -52,15 +59,14 @@ function NoteWidget(props: IProps) {
     >
       <NoteWidgetCard
         note={note}
-        isEdited={isEdited}
-        onEditTitle={handleTitleChange}
-        onEditContent={handleContentChange}
+        isEditModeEnabled={isEditModeEnabled}
+        onEditNote={handleEditNote}
       />
       <ActionButtons
         note={props.note}
         style={{ opacity: isActionButtonsVisible }}
-        isEdited={isEdited}
-        onEdit={setIsEdited}
+        isEditModeEnabled={isEditModeEnabled}
+        onChangeEditMode={handleOnChangeEditMode}
       />
     </div>
   );

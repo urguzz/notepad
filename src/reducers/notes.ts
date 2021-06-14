@@ -54,45 +54,26 @@ export const spentsDataSlice = createSlice({
         1
       );
     },
-    editNoteTitle: (
+    editNote: (
       state,
       action: {
         type: string;
         payload: {
-          newTitle: string;
+          editedNote: Note;
           indexOfNoteToEdit: number;
         };
       }
     ) => {
-      const { newTitle, indexOfNoteToEdit } = action.payload;
+      const { editedNote, indexOfNoteToEdit } = action.payload;
       const noteIndex = state.notes.findIndex(
         (note) => note.index === indexOfNoteToEdit
       );
       if (noteIndex !== -1) {
-        state.notes[noteIndex].title = newTitle;
-      }
-    },
-    editNoteContent: (
-      state,
-      action: {
-        type: string;
-        payload: {
-          newContent: string;
-          indexOfNoteToEdit: number;
-        };
-      }
-    ) => {
-      const { newContent, indexOfNoteToEdit } = action.payload;
-      const noteIndex = state.notes.findIndex(
-        (note) => note.index === indexOfNoteToEdit
-      );
-      if (noteIndex !== -1) {
-        state.notes[noteIndex].content = newContent;
+        state.notes[noteIndex] = editedNote;
       }
     },
   },
 });
 
-export const { addNote, deleteNote, editNoteTitle, editNoteContent } =
-  spentsDataSlice.actions;
+export const { addNote, deleteNote, editNote } = spentsDataSlice.actions;
 export default spentsDataSlice.reducer;
