@@ -32,7 +32,7 @@ function NoteWidgetCard(props: IProps) {
 
   return isEdited ? (
     <Card className={`${styles.card} ${styles.cardEdited}`}>
-      <div className="text-wrapper">
+      <div>
         <Input defaultValue={title} onChange={handleOnChangeTitle} />
         <hr />
         <TextArea
@@ -45,7 +45,7 @@ function NoteWidgetCard(props: IProps) {
     </Card>
   ) : (
     <Card className={styles.card}>
-      <div className="text-wrapper">
+      <div>
         <p>{title}</p>
         <hr />
         <p>{content}</p>
