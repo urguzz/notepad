@@ -1,4 +1,4 @@
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 
 import NotesPage from "./containers/NotesPage/NotesPage";
 import ErrorPage from "./containers/ErrorPage/ErrorPage";
@@ -17,9 +17,12 @@ function App() {
             <Route exact path="/notes">
               <NotesPage />
             </Route>
+            <Route exact path="/not-found">
+              <ErrorPage />
+            </Route>
             <Route exact path="/" />
             <Route>
-              <ErrorPage />
+              <Redirect to="/not-found" />
             </Route>
           </Switch>
         </div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
@@ -6,7 +7,6 @@ import { addNote } from "../../reducers/notes";
 import { useAppDispatch } from "../../store";
 
 import styles from "./LayoutHeader.less";
-import { useState } from "react";
 
 function LayoutHeader() {
   const dispatch = useAppDispatch();
@@ -62,7 +62,7 @@ function LayoutHeader() {
           onClick={(menuItem) => handleMenuItemClick(menuItem.key)}
         >
           <Link to="/test" className={styles.link}>
-            Test
+            ErrorTest
           </Link>
         </Menu.Item>
       </Menu>

@@ -10,6 +10,7 @@ import styles from "./WidgetsField.less";
 function WidgetList() {
   const notesData = useSelector(selectNotes);
   const notes: Array<ReactNode> = [];
+
   notesData?.forEach((note) => {
     notes.push(
       <Col span={8} key={note.index} className={styles.widgetListCol}>
@@ -17,6 +18,7 @@ function WidgetList() {
       </Col>
     );
   });
+
   return (
     <Row gutter={16} justify="space-around" className={styles.widgetListRow}>
       {notes}
