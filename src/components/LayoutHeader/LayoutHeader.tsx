@@ -23,6 +23,7 @@ function LayoutHeader() {
   };
 
   const handleMenuItemClick = (key: string) => {
+    localStorage.setItem("selectedMenu", JSON.stringify(key));
     if (key === "2") {
       setAddButtonIsVisible({
         opacity: 1,
@@ -36,9 +37,17 @@ function LayoutHeader() {
     }
   };
 
+  const selectedMenuJson = localStorage.getItem("selectedMenu");
+  const selectedMenu = selectedMenuJson ? JSON.parse(selectedMenuJson) : {};
+
   return (
     <Header className={styles.header}>
-      <Menu theme="dark" mode="horizontal" className={styles.menu}>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        className={styles.menu}
+        defaultSelectedKeys={selectedMenu}
+      >
         <Menu.Item
           key="1"
           onClick={(menuItem) => handleMenuItemClick(menuItem.key)}
