@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 
@@ -37,8 +37,22 @@ function LayoutHeader() {
     }
   };
 
-  const selectedMenuJson = localStorage.getItem("selectedMenu");
-  const selectedMenu = selectedMenuJson ? JSON.parse(selectedMenuJson) : {};
+  /* const selectedMenuJson = localStorage.getItem("selectedMenu");
+  const selectedMenu = selectedMenuJson ? JSON.parse(selectedMenuJson) : {}; */
+
+  const location = useLocation();
+  const setSelectedMenu = () => {
+    switch (location.pathname.toString()) {
+      case "/":
+        return ["1"];
+
+      case "/notes":
+        return ["2"];
+
+      default:
+        return [];
+    }
+  };
 
   return (
     <Header className={styles.header}>
@@ -46,7 +60,7 @@ function LayoutHeader() {
         theme="dark"
         mode="horizontal"
         className={styles.menu}
-        defaultSelectedKeys={selectedMenu}
+        defaultSelectedKeys={setSelectedMenu()}
       >
         <Menu.Item
           key="1"
