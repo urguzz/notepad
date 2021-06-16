@@ -10,7 +10,7 @@ import styles from "./LayoutHeader.less";
 
 function LayoutHeader() {
   const dispatch = useAppDispatch();
-  const [addButtonIsVisible, setAddButtonIsVisible] = useState<{
+  const [addButtonStyle, setAddButtonStyle] = useState<{
     opacity: number;
     visibility: "hidden" | "visible";
   }>({
@@ -25,12 +25,12 @@ function LayoutHeader() {
   const handleMenuItemClick = (key: string) => {
     localStorage.setItem("selectedMenu", JSON.stringify(key));
     if (key === "2") {
-      setAddButtonIsVisible({
+      setAddButtonStyle({
         opacity: 1,
         visibility: "visible",
       });
     } else {
-      setAddButtonIsVisible({
+      setAddButtonStyle({
         opacity: 0,
         visibility: "hidden",
       });
@@ -47,6 +47,12 @@ function LayoutHeader() {
         return ["1"];
 
       case "/notes":
+        if (addButtonStyle.visibility === "hidden") {
+          setAddButtonStyle({
+            opacity: 1,
+            visibility: "visible",
+          });
+        }
         return ["2"];
 
       default:
@@ -92,8 +98,8 @@ function LayoutHeader() {
 
       <Button
         style={{
-          visibility: addButtonIsVisible.visibility,
-          opacity: addButtonIsVisible.opacity,
+          visibility: addButtonStyle.visibility,
+          opacity: addButtonStyle.opacity,
         }}
         className={styles.addButton}
         type="primary"
