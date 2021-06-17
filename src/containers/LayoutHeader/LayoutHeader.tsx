@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
+import classNames from "classnames";
 
-import { addNote } from "../../reducers/notes";
-import { useAppDispatch } from "../../store";
+import { addNote } from "../../redux/reducers/notes";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
 import styles from "./LayoutHeader.less";
 
 function LayoutHeader() {
+  const hiddenAddButtonClassName = classNames(
+    styles.AddButton,
+    styles.AddButton_Hidden
+  );
+  const addButtonClassName = classNames(styles.AddButton);
+
   const dispatch = useAppDispatch();
-  const [addButtonStyle, setAddButtonStyle] = useState<{
-    opacity: number;
-    visibility: "hidden" | "visible";
-  }>({
-    opacity: 0,
-    visibility: "hidden",
-  });
+  const [isAddButtonVisible, setIsAddButtonVisible] = useState(false);
 
   const handleAddNote = () => {
     dispatch(addNote({ noteTitle: "New note", noteContent: "Note content" }));
@@ -24,22 +25,9 @@ function LayoutHeader() {
 
   const handleMenuItemClick = (key: string) => {
     localStorage.setItem("selectedMenu", JSON.stringify(key));
-    if (key === "2") {
-      setAddButtonStyle({
-        opacity: 1,
-        visibility: "visible",
-      });
-    } else {
-      setAddButtonStyle({
-        opacity: 0,
-        visibility: "hidden",
-      });
-    }
+    setIsAddButtonVisible(key === "2" ? true : false);
   };
-
-  /* const selectedMenuJson = localStorage.getItem("selectedMenu");
-  const selectedMenu = selectedMenuJson ? JSON.parse(selectedMenuJson) : {}; */
-
+  /*
   const location = useLocation();
   const setSelectedMenu = () => {
     switch (location.pathname.toString()) {
@@ -47,26 +35,20 @@ function LayoutHeader() {
         return ["1"];
 
       case "/notes":
-        if (addButtonStyle.visibility === "hidden") {
-          setAddButtonStyle({
-            opacity: 1,
-            visibility: "visible",
-          });
-        }
         return ["2"];
 
       default:
         return [];
     }
   };
-
+*/
   return (
     <Header className={styles.header}>
       <Menu
         theme="dark"
         mode="horizontal"
         className={styles.menu}
-        defaultSelectedKeys={setSelectedMenu()}
+        //defaultSelectedKeys={setSelectedMenu()}
       >
         <Menu.Item
           key="1"
@@ -97,11 +79,9 @@ function LayoutHeader() {
       </Menu>
 
       <Button
-        style={{
-          visibility: addButtonStyle.visibility,
-          opacity: addButtonStyle.opacity,
-        }}
-        className={styles.addButton}
+        className={
+          isAddButtonVisible ? addButtonClassName : hiddenAddButtonClassName
+        }
         type="primary"
         shape="round"
         size="large"

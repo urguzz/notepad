@@ -1,9 +1,9 @@
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 
-import NotesPage from "./containers/NotesPage/NotesPage";
-import ErrorPage from "./containers/ErrorPage/ErrorPage";
-import LayoutHeader from "./components/LayoutHeader/LayoutHeader";
-import LayoutFooter from "./components/LayoutFooter/LayoutFooter";
+import WidgetList from "./containers/WidgetList/WidgetList";
+import NotFoundPage from "./containers/NotFoundError/NotFoundError";
+import LayoutHeader from "./containers/LayoutHeader/LayoutHeader";
+import LayoutFooter from "./containers/LayoutFooter/LayoutFooter";
 
 import styles from "./App.less";
 
@@ -15,10 +15,10 @@ function App() {
         <div className={styles.content}>
           <Switch>
             <Route exact path="/notes">
-              <NotesPage />
+              <WidgetList />
             </Route>
             <Route exact path="/not-found">
-              <ErrorPage />
+              <NotFoundPage />
             </Route>
             <Route exact path="/" />
             <Route>

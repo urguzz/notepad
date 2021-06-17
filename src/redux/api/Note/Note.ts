@@ -1,5 +1,6 @@
 export default interface Note {
-  index: number;
+  id: number;
   title: string;
   content: string;
+  isBeingEdited: boolean;
 }

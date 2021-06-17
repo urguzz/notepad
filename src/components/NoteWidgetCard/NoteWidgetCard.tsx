@@ -1,8 +1,8 @@
+import React from "react";
 import { Card, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import React from "react";
 
-import Note from "./Note/Note";
+import Note from "../../redux/api/Note/Note";
 
 import styles from "./NoteWidgetCard.less";
 
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 function NoteWidgetCard(props: IProps) {
-  const { note, isEditModeEnabled: isEdited, onEditNote } = props;
+  const { note, isEditModeEnabled, onEditNote } = props;
   const { title, content } = note;
 
   const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +30,7 @@ function NoteWidgetCard(props: IProps) {
     }
   };
 
-  return isEdited ? (
+  return isEditModeEnabled ? (
     <Card className={`${styles.card} ${styles.cardEdited}`}>
       <div>
         <Input defaultValue={title} onChange={handleOnChangeTitle} />

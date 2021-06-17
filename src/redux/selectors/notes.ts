@@ -1,5 +1,5 @@
 import { RootState } from "../store";
-import Note from "../components/WidgetsField/NoteWidget/NoteWidgetCard/Note/Note";
+import Note from "../api/Note/Note";
 
 export const selectNotes = (state: RootState): Note[] =>
   state.notesReducer.notes;
