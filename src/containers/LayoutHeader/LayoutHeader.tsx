@@ -3,30 +3,26 @@ import { Link } from "react-router-dom";
 import { Button, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import classNames from "classnames";
-
-import { addNote } from "../../redux/reducers/notes";
-import { useAppDispatch } from "../../redux/hooks/hooks";
+import { LogoutOutlined } from "@ant-design/icons";
 
 import styles from "./LayoutHeader.less";
+import { signOut } from "../../api/firebase/user.repository";
 
-function LayoutHeader() {
-  const hiddenAddButtonClassName = classNames(
-    styles.AddButton,
-    styles.AddButton_Hidden
-  );
-  const addButtonClassName = classNames(styles.AddButton);
+interface IProps {
+  onClickAddButton: () => void;
+}
 
-  const dispatch = useAppDispatch();
+function LayoutHeader(props: IProps) {
   const [isAddButtonVisible, setIsAddButtonVisible] = useState(false);
 
-  const handleAddNote = () => {
-    dispatch(addNote({ noteTitle: "New note", noteContent: "Note content" }));
-  };
+  const hiddenButtonClassName = classNames(styles.Button, styles.Button_Hidden);
+  const buttonClassName = classNames(styles.Button);
 
   const handleMenuItemClick = (key: string) => {
     localStorage.setItem("selectedMenu", JSON.stringify(key));
     setIsAddButtonVisible(key === "2" ? true : false);
   };
+
   /*
   const location = useLocation();
   const setSelectedMenu = () => {
@@ -42,13 +38,14 @@ function LayoutHeader() {
     }
   };
 */
+
   return (
     <Header className={styles.header}>
       <Menu
         theme="dark"
         mode="horizontal"
         className={styles.menu}
-        //defaultSelectedKeys={setSelectedMenu()}
+        defaultSelectedKeys={["2"]}
       >
         <Menu.Item
           key="1"
@@ -79,16 +76,22 @@ function LayoutHeader() {
       </Menu>
 
       <Button
-        className={
-          isAddButtonVisible ? addButtonClassName : hiddenAddButtonClassName
-        }
+        className={isAddButtonVisible ? buttonClassName : hiddenButtonClassName}
         type="primary"
         shape="round"
         size="large"
-        onClick={handleAddNote}
+        onClick={props.onClickAddButton}
       >
         Add Note
       </Button>
+      <Button
+        className={styles.Button}
+        type="default"
+        shape="circle"
+        size="large"
+        icon={<LogoutOutlined />}
+        onClick={() => signOut()}
+      />
     </Header>
   );
 }

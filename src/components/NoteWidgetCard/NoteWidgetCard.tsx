@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 
-import Note from "../../redux/api/Note/Note";
+import Note from "../../api/interfaces/note/note";
 
 import styles from "./NoteWidgetCard.less";
 

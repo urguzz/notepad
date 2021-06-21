@@ -1,6 +1,6 @@
-import styles from "./NotFoundError.less";
+import styles from "./NotFoundPage.less";
 
-function NotFoundError() {
+function NotFoundPage() {
   return (
     <div className={styles.error}>
       <h2 className={styles.errorCode}>404</h2>
@@ -11,4 +11,4 @@ function NotFoundError() {
   );
 }
 
-export default NotFoundError;
+export default NotFoundPage;

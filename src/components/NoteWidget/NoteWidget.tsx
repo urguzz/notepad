@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Note from "../../redux/api/Note/Note";
+import Note from "../../api/interfaces/note/note";
 import NoteWidgetCard from "../NoteWidgetCard/NoteWidgetCard";
 import ActionButtons from "../ActionButtons/ActionButtons";
 
@@ -8,20 +8,30 @@ import styles from "./NoteWidget.less";
 
 interface IProps {
   note: Note;
+  isBeingEdited: boolean;
   onDelete: (noteId: number) => void;
   onStartEdit: (editedNoteId: number) => void;
   onFinishEdit: (editedNote: Note) => void;
+  onCancelEdit: () => void;
 }
 
 function NoteWidget(props: IProps) {
+  const {
+    note,
+    isBeingEdited,
+    onDelete,
+    onFinishEdit,
+    onStartEdit,
+    onCancelEdit,
+  } = props;
   const [isActionButtonsVisible, setIsActionButtonsVisible] = useState(false);
   const [editedNote, setEditedNote] = useState(props.note);
-  const { note, onDelete, onFinishEdit, onStartEdit } = props;
 
   useEffect(() => {
     setEditedNote(note);
-  }, [note]);
+  }, [note, isBeingEdited]);
 
+  //action button opacity
   const handleMouseEnter = () => {
     setIsActionButtonsVisible(true);
   };
@@ -29,7 +39,7 @@ function NoteWidget(props: IProps) {
     setIsActionButtonsVisible(false);
   };
 
-  //widget handlers
+  //note widget handlers
   const handleEditNote = (editedNote: Note) => {
     setEditedNote(editedNote);
   };
@@ -42,7 +52,8 @@ function NoteWidget(props: IProps) {
     if (applyChanges) {
       onFinishEdit(editedNote);
     } else {
-      onFinishEdit(note);
+      onCancelEdit();
+      //setEditedNote(note);
     }
   };
   const handleOnStartEdit = () => {
@@ -57,12 +68,12 @@ function NoteWidget(props: IProps) {
     >
       <NoteWidgetCard
         note={editedNote}
-        isEditModeEnabled={note.isBeingEdited}
+        isEditModeEnabled={isBeingEdited}
         onEditNote={handleEditNote}
       />
       <ActionButtons
         isVisible={isActionButtonsVisible}
-        isEditModeEnabled={note.isBeingEdited}
+        isEditModeEnabled={isBeingEdited}
         onDelete={handleOnDelete}
         onFinishEdit={handleOnFinishEdit}
         onStartEdit={handleOnStartEdit}

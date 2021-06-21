@@ -1,52 +1,54 @@
-import { ReactNode } from "react";
-import { useSelector } from "react-redux";
+import { ReactNode, useState } from "react";
 import { Col, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
 
-import Note from "../../redux/api/Note/Note";
-import { selectNotes } from "../../redux/selectors/notes";
-import { useAppDispatch } from "../../redux/hooks/hooks";
-import {
-  deleteNote,
-  editNote,
-  startEditNote,
-} from "../../redux/reducers/notes";
+import Note from "../../api/interfaces/note/note";
 import NoteWidget from "../../components/NoteWidget/NoteWidget";
 
 import styles from "./WidgetList.less";
+import { updateNote } from "../../api/firebase/notes.repository";
 
-function WidgetList() {
-  const dispatch = useAppDispatch();
-  const notesData = useSelector(selectNotes);
-  const notes: Array<ReactNode> = [];
+interface IProps {
+  notes: Note[];
+  onDelete: (noteId: number) => void;
+  onEdit: (editedNote: Note) => void;
+}
 
-  const handleOnDelete = (noteId: number) => {
-    dispatch(deleteNote({ idOfNoteToDelete: noteId }));
-  };
+function WidgetList(props: IProps) {
+  const [editedNoteId, setEditedNoteId] = useState(-1);
+  const { notes, onDelete } = props;
+  const noteWidgets: Array<ReactNode> = [];
+
   const handleOnStartEdit = (editedNoteId: number) => {
-    dispatch(startEditNote({ idOfNoteToEdit: editedNoteId }));
+    setEditedNoteId(editedNoteId);
   };
   const handleOnFinishEdit = (editedNote: Note) => {
-    dispatch(editNote({ editedNote }));
+    setEditedNoteId(-1);
+    updateNote(editedNote);
+  };
+  const handleOnCancelEdit = () => {
+    setEditedNoteId(-1);
   };
 
-  notesData?.forEach((note) => {
-    notes.push(
+  notes?.forEach((note) => {
+    noteWidgets.push(
       <Col span={8} key={note.id} className={styles.widgetListCol}>
         <NoteWidget
           note={note}
-          onDelete={handleOnDelete}
+          isBeingEdited={editedNoteId === note.id ? true : false}
+          onDelete={onDelete}
           onStartEdit={handleOnStartEdit}
           onFinishEdit={handleOnFinishEdit}
+          onCancelEdit={handleOnCancelEdit}
         />
       </Col>
     );
   });
 
   return (
-    <Content className={styles.content}>
+    <Content className={styles.Content}>
       <Row gutter={16} justify="space-around" className={styles.widgetListRow}>
-        {notes}
+        {noteWidgets}
       </Row>
     </Content>
   );

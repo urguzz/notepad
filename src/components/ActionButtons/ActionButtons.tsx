@@ -20,6 +20,7 @@ interface IProps {
 function ActionButtons(props: IProps) {
   const { isEditModeEnabled, isVisible, onDelete, onFinishEdit, onStartEdit } =
     props;
+
   const confirmButtonClassName = classNames(
     styles.actionButton,
     styles.actionConfirmButton
