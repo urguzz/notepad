@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import firebase from "firebase";
 import _ from "lodash";
 
@@ -11,10 +12,12 @@ import {
   updateNote,
 } from "../../api/firebase/notes.repository";
 import Note from "../../api/interfaces/note/note";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import HomePage from "../HomePage/HomePage";
 
-import styles from "./NotesPage.less";
+import styles from "./MainPage.less";
 
-function NotesPage() {
+function MainPage() {
   const [notes, setNotes] = useState<Note[]>([]);
   const userId = firebase.auth().currentUser?.uid;
 
@@ -60,16 +63,34 @@ function NotesPage() {
   };
 
   return (
-    <div className={styles.Wrapper}>
+    <div className={styles.PageWrapper}>
       <LayoutHeader onClickAddButton={handleAddNote} />
-      <WidgetList
-        notes={notes}
-        onDelete={handleOnDelete}
-        onEdit={handleOnEdit}
-      />
+      <div className={styles.ContentWrapper}>
+        <Switch>
+          <Route exact path="/u/notes">
+            <WidgetList
+              notes={notes}
+              onDelete={handleOnDelete}
+              onEdit={handleOnEdit}
+            />
+          </Route>
+          <Route exact path="/u/home">
+            <HomePage />
+          </Route>
+          <Route exact path="/u/error">
+            <NotFoundPage />
+          </Route>
+          <Route exact path="/u">
+            <Redirect to="/u/home" />
+          </Route>
+          <Route path="*">
+            <Redirect to="/u/error" />
+          </Route>
+        </Switch>
+      </div>
       <LayoutFooter />
     </div>
   );
 }
 
-export default NotesPage;
+export default MainPage;

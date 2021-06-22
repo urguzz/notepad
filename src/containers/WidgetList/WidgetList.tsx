@@ -3,10 +3,10 @@ import { Col, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
 
 import Note from "../../api/interfaces/note/note";
+import { updateNote } from "../../api/firebase/notes.repository";
 import NoteWidget from "../../components/NoteWidget/NoteWidget";
 
 import styles from "./WidgetList.less";
-import { updateNote } from "../../api/firebase/notes.repository";
 
 interface IProps {
   notes: Note[];
@@ -46,7 +46,7 @@ function WidgetList(props: IProps) {
   });
 
   return (
-    <Content className={styles.Content}>
+    <Content>
       <Row gutter={16} justify="space-around" className={styles.widgetListRow}>
         {noteWidgets}
       </Row>

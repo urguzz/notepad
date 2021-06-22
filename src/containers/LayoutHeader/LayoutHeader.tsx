@@ -19,25 +19,8 @@ function LayoutHeader(props: IProps) {
   const buttonClassName = classNames(styles.Button);
 
   const handleMenuItemClick = (key: string) => {
-    localStorage.setItem("selectedMenu", JSON.stringify(key));
     setIsAddButtonVisible(key === "2" ? true : false);
   };
-
-  /*
-  const location = useLocation();
-  const setSelectedMenu = () => {
-    switch (location.pathname.toString()) {
-      case "/":
-        return ["1"];
-
-      case "/notes":
-        return ["2"];
-
-      default:
-        return [];
-    }
-  };
-*/
 
   return (
     <Header className={styles.header}>
@@ -45,13 +28,13 @@ function LayoutHeader(props: IProps) {
         theme="dark"
         mode="horizontal"
         className={styles.menu}
-        defaultSelectedKeys={["2"]}
+        defaultSelectedKeys={["1"]}
       >
         <Menu.Item
           key="1"
           onClick={(menuItem) => handleMenuItemClick(menuItem.key)}
         >
-          <Link to="/" className={styles.link}>
+          <Link to="/u/home" className={styles.link}>
             Home
           </Link>
         </Menu.Item>
@@ -60,7 +43,7 @@ function LayoutHeader(props: IProps) {
           key="2"
           onClick={(menuItem) => handleMenuItemClick(menuItem.key)}
         >
-          <Link to="/notes" className={styles.link}>
+          <Link to="/u/notes" className={styles.link}>
             Notes
           </Link>
         </Menu.Item>
@@ -69,7 +52,7 @@ function LayoutHeader(props: IProps) {
           key="3"
           onClick={(menuItem) => handleMenuItemClick(menuItem.key)}
         >
-          <Link to="/test" className={styles.link}>
+          <Link to="/u/test" className={styles.link}>
             ErrorTest
           </Link>
         </Menu.Item>

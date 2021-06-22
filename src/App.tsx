@@ -1,9 +1,8 @@
-import { FirebaseAuthConsumer } from "@react-firebase/auth";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
+import { FirebaseAuthConsumer } from "@react-firebase/auth";
 
 import AuthPage from "./pages/AuthPage/AuthPage";
-import NotesPage from "./pages/NotesPage/NotesPage";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import MainPage from "./pages/MainPage/MainPage";
 
 import styles from "./App.less";
 
@@ -11,29 +10,24 @@ function App() {
   return (
     <BrowserRouter>
       <div className={styles.App}>
+        <FirebaseAuthConsumer>
+          {(user) => {
+            if (user.providerId !== null) {
+              if (user.isSignedIn) {
+                return <Redirect from="/auth" to="/u" />;
+              }
+              return <Redirect to="/auth" />;
+            }
+          }}
+        </FirebaseAuthConsumer>
         <Switch>
           <Route exact path="/auth">
             <AuthPage />
           </Route>
-          <Route exact path="/notes">
-            <NotesPage />
-          </Route>
-          <Route exact path="/">
-            <NotesPage />
-          </Route>
-          <Route>
-            <NotFoundPage />
+          <Route path="/u">
+            <MainPage />
           </Route>
         </Switch>
-        <FirebaseAuthConsumer>
-          {(user) =>
-            user.isSignedIn ? (
-              <Redirect from="/auth" to="/notes" />
-            ) : (
-              <Redirect to="/auth" />
-            )
-          }
-        </FirebaseAuthConsumer>
       </div>
     </BrowserRouter>
   );
