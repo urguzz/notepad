@@ -21,13 +21,21 @@ function App() {
         {(user) => {
           if (user.providerId !== null) {
             if (user.isSignedIn) {
-              return <Redirect from="/auth" to="/u" />;
+              // return <Redirect from="/auth" to="/u" />;
+              const prevLocation = localStorage.getItem("prevLocation");
+              if (
+                !prevLocation?.startsWith("/u/") &&
+                prevLocation !== "/error"
+              ) {
+                return <Redirect from="/auth" to="/u" />;
+              }
+            } else {
+              return (
+                <Route path="*">
+                  <Redirect to="/auth" />
+                </Route>
+              );
             }
-            return (
-              <Route path="*">
-                <Redirect to="/auth" />
-              </Route>
-            );
           }
         }}
       </FirebaseAuthConsumer>
@@ -41,17 +49,6 @@ function App() {
         <Route path="/u">
           <MainPage />
         </Route>
-        <FirebaseAuthConsumer>
-          {(user) => {
-            if (user.providerId !== null && user.isSignedIn) {
-              return (
-                <Route path="*">
-                  <Redirect to="/error" />
-                </Route>
-              );
-            }
-          }}
-        </FirebaseAuthConsumer>
       </Switch>
     </div>
   );
