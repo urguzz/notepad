@@ -12,7 +12,6 @@ import {
   updateNote,
 } from "../../api/firebase/notes.repository";
 import Note from "../../api/interfaces/note/note";
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import HomePage from "../HomePage/HomePage";
 
 import styles from "./MainPage.less";
@@ -38,7 +37,7 @@ function MainPage() {
     });
 
   //api calls
-  const handleAddNote = () => {
+  const handleOnAdd = () => {
     const notesIdList = new Set<number>();
     notes.forEach((note) => notesIdList.add(note.id!));
     let newNoteUniqueId = 0;
@@ -64,12 +63,13 @@ function MainPage() {
 
   return (
     <div className={styles.PageWrapper}>
-      <LayoutHeader onClickAddButton={handleAddNote} />
+      <LayoutHeader />
       <div className={styles.ContentWrapper}>
         <Switch>
           <Route exact path="/u/notes">
             <WidgetList
               notes={notes}
+              onAdd={handleOnAdd}
               onDelete={handleOnDelete}
               onEdit={handleOnEdit}
             />
@@ -77,14 +77,11 @@ function MainPage() {
           <Route exact path="/u/home">
             <HomePage />
           </Route>
-          <Route exact path="/u/error">
-            <NotFoundPage />
-          </Route>
           <Route exact path="/u">
             <Redirect to="/u/home" />
           </Route>
           <Route path="*">
-            <Redirect to="/u/error" />
+            <Redirect to="/error" />
           </Route>
         </Switch>
       </div>

@@ -3,20 +3,21 @@ import { Col, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
 
 import Note from "../../api/interfaces/note/note";
-import { updateNote } from "../../api/firebase/notes.repository";
 import NoteWidget from "../../components/NoteWidget/NoteWidget";
+import FloatingButton from "../../components/FloatingButton/FloatingButton";
 
 import styles from "./WidgetList.less";
 
 interface IProps {
   notes: Note[];
+  onAdd: () => void;
   onDelete: (noteId: number) => void;
   onEdit: (editedNote: Note) => void;
 }
 
 function WidgetList(props: IProps) {
   const [editedNoteId, setEditedNoteId] = useState(-1);
-  const { notes, onDelete } = props;
+  const { notes, onDelete, onAdd, onEdit } = props;
   const noteWidgets: Array<ReactNode> = [];
 
   const handleOnStartEdit = (editedNoteId: number) => {
@@ -24,7 +25,7 @@ function WidgetList(props: IProps) {
   };
   const handleOnFinishEdit = (editedNote: Note) => {
     setEditedNoteId(-1);
-    updateNote(editedNote);
+    onEdit(editedNote);
   };
   const handleOnCancelEdit = () => {
     setEditedNoteId(-1);
@@ -50,6 +51,7 @@ function WidgetList(props: IProps) {
       <Row gutter={16} justify="space-around" className={styles.widgetListRow}>
         {noteWidgets}
       </Row>
+      <FloatingButton onClick={onAdd} />
     </Content>
   );
 }

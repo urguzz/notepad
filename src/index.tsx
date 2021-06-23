@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { FirebaseAuthProvider } from "@react-firebase/auth";
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
@@ -17,7 +18,9 @@ ReactDOM.render(
   <FirebaseAuthProvider firebase={firebase} {...config}>
     <FirebaseDatabaseProvider firebase={firebase} {...config}>
       <React.StrictMode>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </React.StrictMode>
     </FirebaseDatabaseProvider>
   </FirebaseAuthProvider>,
