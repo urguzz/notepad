@@ -1,4 +1,5 @@
 import LayoutFooter from "../../containers/LayoutFooter/LayoutFooter";
+
 import styles from "./NotFoundPage.less";
 
 function NotFoundPage() {

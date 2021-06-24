@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import firebase from "firebase";
 import _ from "lodash";
@@ -21,13 +21,12 @@ function MainPage() {
   const userId = firebase.auth().currentUser?.uid;
 
   //update state on firebase db change
-  firebase
-    .database()
-    .ref("users/" + userId + "/notes/")
-    .on("value", (snapshot) => {
+  const db = firebase.database().ref("users/" + userId + "/notes/");
+  useEffect(() => {
+    db.on("value", (snapshot) => {
       if (snapshot.val()) {
-        const firebaseNotes: any = [];
-        Object.values(snapshot.val() as { _: Note }).forEach((note: Note) => {
+        const firebaseNotes: Note[] = [];
+        Object.values(snapshot.val() as Note).forEach((note: Note) => {
           firebaseNotes.push(note);
         });
         if (!_.isEqual(firebaseNotes, notes)) {
@@ -35,6 +34,10 @@ function MainPage() {
         }
       }
     });
+    return () => {
+      db.off();
+    };
+  });
 
   //api calls
   const handleOnAdd = () => {

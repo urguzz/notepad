@@ -21,13 +21,13 @@ function App() {
         {(user) => {
           if (user.providerId !== null) {
             if (user.isSignedIn) {
-              // return <Redirect from="/auth" to="/u" />;
               const prevLocation = localStorage.getItem("prevLocation");
-              if (
-                !prevLocation?.startsWith("/u/") &&
-                prevLocation !== "/error"
-              ) {
-                return <Redirect from="/auth" to="/u" />;
+              if (!prevLocation?.startsWith("/u/")) {
+                if (prevLocation !== "/error") {
+                  return <Redirect from="/auth" to="/u" />;
+                } else {
+                  return <Redirect from="/auth" to={prevLocation} />;
+                }
               }
             } else {
               return (

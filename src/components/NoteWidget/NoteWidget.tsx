@@ -53,7 +53,6 @@ function NoteWidget(props: IProps) {
       onFinishEdit(editedNote);
     } else {
       onCancelEdit();
-      //setEditedNote(note);
     }
   };
   const handleOnStartEdit = () => {
