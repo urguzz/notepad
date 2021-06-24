@@ -6,7 +6,7 @@ import Note from "../../api/interfaces/note/note";
 import NoteWidget from "../../components/NoteWidget/NoteWidget";
 import FloatingButton from "../../components/FloatingButton/FloatingButton";
 
-import styles from "./WidgetList.less";
+import styles from "./NotesContainer.less";
 
 interface IProps {
   notes: Note[];
@@ -15,7 +15,7 @@ interface IProps {
   onEdit: (editedNote: Note) => void;
 }
 
-function WidgetList(props: IProps) {
+function NotesContainer(props: IProps) {
   const [editedNoteId, setEditedNoteId] = useState(-1);
   const { notes, onDelete, onAdd, onEdit } = props;
   const noteWidgets: Array<ReactNode> = [];
@@ -56,4 +56,4 @@ function WidgetList(props: IProps) {
   );
 }
 
-export default WidgetList;
+export default NotesContainer;

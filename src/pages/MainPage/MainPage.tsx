@@ -5,14 +5,14 @@ import _ from "lodash";
 
 import LayoutFooter from "../../containers/LayoutFooter/LayoutFooter";
 import LayoutHeader from "../../containers/LayoutHeader/LayoutHeader";
-import WidgetList from "../../containers/WidgetList/WidgetList";
+import NotesContainer from "../../containers/NotesContainer/NotesContainer";
+import HomeContainer from "../../containers/HomeContainer/HomeContainer";
 import {
   addNote,
   deleteNote,
   updateNote,
 } from "../../api/firebase/notes.repository";
 import Note from "../../api/interfaces/note/note";
-import HomePage from "../HomePage/HomePage";
 
 import styles from "./MainPage.less";
 
@@ -67,7 +67,7 @@ function MainPage() {
       <div className={styles.ContentWrapper}>
         <Switch>
           <Route exact path="/u/notes">
-            <WidgetList
+            <NotesContainer
               notes={notes}
               onAdd={handleOnAdd}
               onDelete={handleOnDelete}
@@ -75,7 +75,7 @@ function MainPage() {
             />
           </Route>
           <Route exact path="/u/home">
-            <HomePage />
+            <HomeContainer />
           </Route>
           <Route exact path="/u">
             <Redirect to="/u/home" />
