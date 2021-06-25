@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import firebase from "firebase";
-import _ from "lodash";
 
 import LayoutFooter from "../../containers/LayoutFooter/LayoutFooter";
 import LayoutHeader from "../../containers/LayoutHeader/LayoutHeader";
