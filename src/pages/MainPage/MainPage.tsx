@@ -33,14 +33,12 @@ function MainPage() {
   //update state on firebase db change
   useEffect(() => {
     database?.on("value", (snapshot) => {
-      if (snapshot.val()) {
+      if (snapshot.val() && user?.providerId) {
         const firebaseNotes: Note[] = [];
         Object.values(snapshot.val() as Note).forEach((note: Note) => {
           firebaseNotes.push(note);
         });
-        if (!_.isEqual(firebaseNotes, notes)) {
-          setNotes(firebaseNotes);
-        }
+        setNotes(firebaseNotes);
       }
     });
     return () => {
