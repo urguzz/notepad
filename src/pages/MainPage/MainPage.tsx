@@ -18,12 +18,21 @@ import styles from "./MainPage.less";
 
 function MainPage() {
   const [notes, setNotes] = useState<Note[]>([]);
-  const userId = firebase.auth().currentUser?.uid;
+  const [user, setUser] = useState<firebase.User | null>(null);
+  const [database, setDatabase] = useState<firebase.database.Reference | null>(
+    null
+  );
+
+  firebase.auth().onAuthStateChanged((newUser) => {
+    if (newUser && newUser.providerId !== null && newUser.uid !== user?.uid) {
+      setUser(newUser);
+      setDatabase(firebase.database().ref("users/" + newUser.uid + "/notes/"));
+    }
+  });
 
   //update state on firebase db change
-  const db = firebase.database().ref("users/" + userId + "/notes/");
   useEffect(() => {
-    db.on("value", (snapshot) => {
+    database?.on("value", (snapshot) => {
       if (snapshot.val()) {
         const firebaseNotes: Note[] = [];
         Object.values(snapshot.val() as Note).forEach((note: Note) => {
@@ -35,9 +44,10 @@ function MainPage() {
       }
     });
     return () => {
-      db.off();
+      database?.off();
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [database]);
 
   //api calls
   const handleOnAdd = () => {
