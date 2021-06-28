@@ -15,9 +15,9 @@ function LayoutHeader() {
   );
 
   const routeMap = new Map<string, { id: string; text: string }>([
-    ["/u/home", { id: "1", text: "Home" }],
-    ["/u/notes", { id: "2", text: "Notes" }],
-    ["/u/test", { id: "3", text: "Error" }],
+    ["/user/home", { id: "1", text: "Home" }],
+    ["/user/notes", { id: "2", text: "Notes" }],
+    ["/user/test", { id: "3", text: "Error" }],
   ]);
 
   const menus: ReactNode[] = [];

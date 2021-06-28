@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import firebase from "firebase/app";
 
 import LayoutFooter from "../../containers/LayoutFooter/LayoutFooter";
@@ -16,6 +16,7 @@ import Note from "../../api/interfaces/note/note";
 import styles from "./MainPage.less";
 
 function MainPage() {
+  const { url } = useRouteMatch();
   const [notes, setNotes] = useState<Note[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
   const [database, setDatabase] = useState<firebase.database.Reference | null>(
@@ -76,7 +77,7 @@ function MainPage() {
       <LayoutHeader />
       <div className={styles.ContentWrapper}>
         <Switch>
-          <Route exact path="/u/notes">
+          <Route exact path={`${url}/notes`}>
             <NotesContainer
               notes={notes}
               onAdd={handleOnAdd}
@@ -84,11 +85,11 @@ function MainPage() {
               onEdit={handleOnEdit}
             />
           </Route>
-          <Route exact path="/u/home">
+          <Route exact path={`${url}/home`}>
             <HomeContainer />
           </Route>
-          <Route exact path="/u">
-            <Redirect to="/u/home" />
+          <Route exact path="/user">
+            <Redirect to={`${url}/home`} />
           </Route>
           <Route path="*">
             <Redirect to="/error" />

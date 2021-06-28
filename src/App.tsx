@@ -22,12 +22,11 @@ function App() {
           if (user.providerId !== null) {
             if (user.isSignedIn) {
               const prevLocation = localStorage.getItem("prevLocation");
-              if (!prevLocation?.startsWith("/u/")) {
-                if (prevLocation !== "/error") {
-                  return <Redirect from="/auth" to="/u" />;
-                } else {
-                  return <Redirect from="/auth" to={prevLocation} />;
-                }
+              if (
+                !prevLocation?.startsWith("/user/") &&
+                prevLocation !== "/error"
+              ) {
+                return <Redirect from="/auth" to="/user" />;
               }
             } else {
               return (
@@ -46,7 +45,7 @@ function App() {
         <Route exact path="/error">
           <NotFoundPage />
         </Route>
-        <Route path="/u">
+        <Route path="/user">
           <MainPage />
         </Route>
       </Switch>

@@ -8,7 +8,7 @@ function NotFoundPage() {
       <div className={styles.error}>
         <h2>404</h2>
         <p>Sorry, the page you are looking for is not found :(</p>
-        <a href="/u">To the main page</a>
+        <a href="/user">To the main page</a>
       </div>
       <LayoutFooter />
     </div>
