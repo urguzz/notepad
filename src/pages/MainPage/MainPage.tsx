@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import firebase from "firebase/app";
 
 import LayoutFooter from "../../containers/LayoutFooter/LayoutFooter";
 import LayoutHeader from "../../containers/LayoutHeader/LayoutHeader";
 import NotesContainer from "../../containers/NotesContainer/NotesContainer";
 import HomeContainer from "../../containers/HomeContainer/HomeContainer";
+import Note from "../../api/interfaces/note/note";
 import {
   addNote,
   deleteNote,
   updateNote,
 } from "../../api/firebase/notes.repository";
-import Note from "../../api/interfaces/note/note";
+import { signOut } from "../../api/firebase/user.repository";
 
 import styles from "./MainPage.less";
 
 function MainPage() {
-  const { url } = useRouteMatch();
+  const [activeTab, setActiveTab] = useState("0");
   const [notes, setNotes] = useState<Note[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
   const [database, setDatabase] = useState<firebase.database.Reference | null>(
@@ -48,6 +48,12 @@ function MainPage() {
   }, [database]);
 
   //api calls
+  const handleOnChangeTab = (tabKey: string) => {
+    setActiveTab(tabKey);
+  };
+  const handleOnSignOut = () => {
+    signOut();
+  };
   const handleOnAdd = () => {
     const notesIdList = new Set<number>();
     notes.forEach((note) => notesIdList.add(note.id!));
@@ -72,30 +78,26 @@ function MainPage() {
     updateNote(editedNote);
   };
 
+  const contentMap = new Map<string, React.ReactNode>([
+    ["0", <HomeContainer />],
+    [
+      "1",
+      <NotesContainer
+        notes={notes}
+        onAdd={handleOnAdd}
+        onDelete={handleOnDelete}
+        onEdit={handleOnEdit}
+      />,
+    ],
+  ]);
+
   return (
     <div className={styles.PageWrapper}>
-      <LayoutHeader />
-      <div className={styles.ContentWrapper}>
-        <Switch>
-          <Route exact path={`${url}/notes`}>
-            <NotesContainer
-              notes={notes}
-              onAdd={handleOnAdd}
-              onDelete={handleOnDelete}
-              onEdit={handleOnEdit}
-            />
-          </Route>
-          <Route exact path={`${url}/home`}>
-            <HomeContainer />
-          </Route>
-          <Route exact path="/user">
-            <Redirect to={`${url}/home`} />
-          </Route>
-          <Route path="*">
-            <Redirect to="/error" />
-          </Route>
-        </Switch>
-      </div>
+      <LayoutHeader
+        onSignOut={handleOnSignOut}
+        onChangeTab={handleOnChangeTab}
+      />
+      <div className={styles.ContentWrapper}>{contentMap.get(activeTab)}</div>
       <LayoutFooter />
     </div>
   );

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { FirebaseAuthConsumer } from "@react-firebase/auth";
 
 import AuthPage from "./pages/AuthPage/AuthPage";
@@ -9,25 +8,13 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import styles from "./App.less";
 
 function App() {
-  const location = useLocation();
-
-  useEffect(() => {
-    localStorage.setItem("prevLocation", location.pathname);
-  }, [location]);
-
   return (
     <div className={styles.App}>
       <FirebaseAuthConsumer>
         {(user) => {
           if (user.providerId !== null) {
             if (user.isSignedIn) {
-              const prevLocation = localStorage.getItem("prevLocation");
-              if (
-                !prevLocation?.startsWith("/user/") &&
-                prevLocation !== "/error"
-              ) {
-                return <Redirect from="/auth" to="/user" />;
-              }
+              return <Redirect from="/auth" to="/home" />;
             } else {
               return (
                 <Route path="*">
@@ -42,12 +29,23 @@ function App() {
         <Route exact path="/auth">
           <AuthPage />
         </Route>
+        <Route path="/home">
+          <MainPage />
+        </Route>
         <Route exact path="/error">
           <NotFoundPage />
         </Route>
-        <Route path="/user">
-          <MainPage />
-        </Route>
+        <FirebaseAuthConsumer>
+          {(user) => {
+            if (user.providerId !== null && user.isSignedIn) {
+              return (
+                <Route path="*">
+                  <Redirect to="/error" />
+                </Route>
+              );
+            }
+          }}
+        </FirebaseAuthConsumer>
       </Switch>
     </div>
   );

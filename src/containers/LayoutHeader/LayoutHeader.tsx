@@ -1,48 +1,49 @@
-import { ReactNode, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { ReactNode } from "react";
 import { Button, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import { LogoutOutlined } from "@ant-design/icons";
-
-import { signOut } from "../../api/firebase/user.repository";
+import { MenuInfo } from "rc-menu/lib/interface";
 
 import styles from "./LayoutHeader.less";
 
-function LayoutHeader() {
-  const location = useLocation();
-  const [selectedMenuId, setSelectedMenuId] = useState<string | undefined>(
-    undefined
-  );
+interface IProps {
+  onSignOut?: () => void;
+  onChangeTab?: (tabKey: string) => void;
+}
 
-  const routeMap = new Map<string, { id: string; text: string }>([
-    ["/user/home", { id: "1", text: "Home" }],
-    ["/user/notes", { id: "2", text: "Notes" }],
-    ["/user/test", { id: "3", text: "Error" }],
-  ]);
+function LayoutHeader(props: IProps) {
+  const { onChangeTab, onSignOut } = props;
+
+  const handleOnChangeTab = (menu: MenuInfo) => {
+    if (onChangeTab) {
+      onChangeTab(menu.key);
+    }
+  };
 
   const menus: ReactNode[] = [];
-  routeMap.forEach((menu, route) => {
+  const menuMap = new Map<string, string>([
+    ["0", "Home"],
+    ["1", "Notes"],
+  ]);
+  menuMap.forEach((name, key) => {
     menus.push(
-      <Menu.Item key={menu.id}>
-        <Link to={route} className={styles.link}>
-          {menu.text}
-        </Link>
+      <Menu.Item
+        key={key}
+        onClick={handleOnChangeTab}
+        className={styles.MenuItem}
+      >
+        {name}
       </Menu.Item>
     );
   });
 
-  useEffect(() => {
-    setSelectedMenuId(routeMap.get(location.pathname)?.id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
-
   return (
-    <Header className={styles.header}>
+    <Header className={styles.Header}>
       <Menu
         theme="dark"
         mode="horizontal"
-        className={styles.menu}
-        {...(selectedMenuId ? { selectedKeys: [selectedMenuId] } : {})}
+        defaultSelectedKeys={["0"]}
+        className={styles.Menu}
       >
         {menus}
       </Menu>
@@ -52,7 +53,7 @@ function LayoutHeader() {
         shape="circle"
         size="large"
         icon={<LogoutOutlined />}
-        onClick={() => signOut()}
+        onClick={onSignOut}
       />
     </Header>
   );
