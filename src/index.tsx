@@ -12,6 +12,7 @@ import "antd/dist/antd.css";
 import { config } from "./firebase.config";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "./i18n";
 
 import "./index.css";
 

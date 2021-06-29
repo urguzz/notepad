@@ -1,0 +1,15 @@
+{
+  "title": "English",
+  "auth": {
+    "SignIn": "Sign In",
+    "SignUp": "Sign Up"
+  },
+  "main": {
+    "Home": "Home",
+    "Notes": "Notes"
+  },
+  "error": {
+    "NotFoundMessage": "Sorry, the page you are looking for is not found :(",
+    "ToTheMainPage": "To the main page"
+  }
+}
