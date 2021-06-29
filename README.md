@@ -1,1 +1,1 @@
-Website written in reactjs
+React.js + firebase
