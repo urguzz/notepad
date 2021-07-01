@@ -18,6 +18,7 @@ function LayoutHeader(props: IProps) {
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
+    localStorage.setItem("language", language);
   };
   const handleOnChangeTab = (menu: MenuInfo) => {
     if (onChangeTab) {

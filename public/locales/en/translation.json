@@ -14,6 +14,9 @@
     "Home": "Home",
     "Notes": "Notes"
   },
+  "home": {
+    "Welcome": "Welcome!"
+  },
   "error": {
     "NotFoundMessage": "Sorry, the page you are looking for is not found :(",
     "ToTheMainPage": "To the main page"

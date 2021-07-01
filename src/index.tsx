@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { FirebaseAuthProvider } from "@react-firebase/auth";
@@ -21,7 +21,9 @@ ReactDOM.render(
     <FirebaseDatabaseProvider firebase={firebase} {...config}>
       <BrowserRouter>
         <React.StrictMode>
-          <App />
+          <Suspense fallback="loading">
+            <App />
+          </Suspense>
         </React.StrictMode>
       </BrowserRouter>
     </FirebaseDatabaseProvider>
