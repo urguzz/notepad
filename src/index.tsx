@@ -19,11 +19,11 @@ import "./index.css";
 ReactDOM.render(
   <FirebaseAuthProvider firebase={firebase} {...config}>
     <FirebaseDatabaseProvider firebase={firebase} {...config}>
-      <React.StrictMode>
-        <BrowserRouter>
+      <BrowserRouter>
+        <React.StrictMode>
           <App />
-        </BrowserRouter>
-      </React.StrictMode>
+        </React.StrictMode>
+      </BrowserRouter>
     </FirebaseDatabaseProvider>
   </FirebaseAuthProvider>,
   document.getElementById("root")

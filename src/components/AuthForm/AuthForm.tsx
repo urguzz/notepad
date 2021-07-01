@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Form, Input, Button } from "antd";
 
 import UserCredentials from "../../api/interfaces/user/user";
@@ -10,20 +11,30 @@ interface IProps {
 }
 
 interface SignFormProps {
-  formLabel: string;
   submitButtonText: string;
 }
 
 function AuthForm(props: IProps) {
   const { onFinish, type } = props;
+  const { t } = useTranslation();
 
   const handleOnFinish = (user: UserCredentials) => {
     onFinish(user);
   };
 
   const formPropsMap = new Map<string, SignFormProps>([
-    ["signIn", { formLabel: "Login", submitButtonText: "Sign In" }],
-    ["signUp", { formLabel: "Register", submitButtonText: "Sign Up" }],
+    [
+      "signIn",
+      {
+        submitButtonText: t("auth.SignInButton"),
+      },
+    ],
+    [
+      "signUp",
+      {
+        submitButtonText: t("auth.SignUpButton"),
+      },
+    ],
   ]);
   const { submitButtonText } = formPropsMap.get(type)!;
 
@@ -31,24 +42,28 @@ function AuthForm(props: IProps) {
     <Form name="auth" onFinish={handleOnFinish}>
       <Form.Item
         className={styles.FormItem}
-        label="Email"
+        label={t("auth.EmailLabel")}
         name="email"
-        rules={[{ required: true, message: "Please input your email!" }]}
+        rules={[{ required: true, message: t("auth.EmailInputWarning") }]}
       >
         <Input type="email" />
       </Form.Item>
 
       <Form.Item
         className={styles.FormItem}
-        label="Password"
+        label={t("auth.PasswordLabel")}
         name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: t("auth.PasswordInputWarning") }]}
       >
         <Input.Password />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          className={styles.SubmitButton}
+        >
           {submitButtonText}
         </Button>
       </Form.Item>

@@ -2,7 +2,13 @@
   "title": "Русский",
   "auth": {
     "SignIn": "Вход",
-    "SignUp": "Регистрация"
+    "SignUp": "Регистрация",
+    "SignInButton": "Войти",
+    "SignUpButton": "Войти",
+    "EmailInputWarning": "Пожалуйста, введите логин!",
+    "PasswordInputWarning": "Пожалуйста, введите пароль!",
+    "EmailLabel": "Логин",
+    "PasswordLabel": "Пароль"
   },
   "main": {
     "Home": "Главная",

@@ -32,24 +32,20 @@ function NoteWidgetCard(props: IProps) {
 
   return isEditModeEnabled ? (
     <Card className={`${styles.card} ${styles.cardEdited}`}>
-      <div>
-        <Input defaultValue={title} onChange={handleOnChangeTitle} />
-        <hr />
-        <TextArea
-          defaultValue={content}
-          onChange={handleOnChangeContent}
-          rows={6}
-          autoSize={true}
-        />
-      </div>
+      <Input defaultValue={title} onChange={handleOnChangeTitle} />
+      <hr />
+      <TextArea
+        defaultValue={content}
+        onChange={handleOnChangeContent}
+        rows={6}
+        autoSize={true}
+      />
     </Card>
   ) : (
     <Card className={styles.card}>
-      <div>
-        <p>{title}</p>
-        <hr />
-        <p>{content}</p>
-      </div>
+      <p>{title}</p>
+      <hr />
+      <p>{content}</p>
     </Card>
   );
 }

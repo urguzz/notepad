@@ -2,7 +2,13 @@
   "title": "English",
   "auth": {
     "SignIn": "Sign In",
-    "SignUp": "Sign Up"
+    "SignUp": "Sign Up",
+    "SignInButton": "Sign In",
+    "SignUpButton": "Sign Up",
+    "EmailInputWarning": "Please enter your email!",
+    "PasswordInputWarning": "Please enter your password!",
+    "EmailLabel": "Email",
+    "PasswordLabel": "Password"
   },
   "main": {
     "Home": "Home",
