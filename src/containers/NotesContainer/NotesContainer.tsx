@@ -1,6 +1,8 @@
 import { ReactNode, useState } from "react";
+import { ListManager } from "react-beautiful-dnd-grid";
 import { Col, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import Note from "../../api/interfaces/note/note";
 import NoteWidget from "../../components/NoteWidget/NoteWidget";
@@ -30,11 +32,13 @@ function NotesContainer(props: IProps) {
   const handleOnCancelEdit = () => {
     setEditedNoteId(-1);
   };
+  const handleOnDragEnd = () => {};
 
-  notes?.forEach((note) => {
+  notes?.forEach((note, index) => {
     noteWidgets.push(
-      <Col span={8} key={note.id} className={styles.widgetListCol}>
+      <div className={styles.GridItem}>
         <NoteWidget
+          key={note.id}
           note={note}
           isBeingEdited={editedNoteId === note.id ? true : false}
           onDelete={onDelete}
@@ -42,15 +46,33 @@ function NotesContainer(props: IProps) {
           onFinishEdit={handleOnFinishEdit}
           onCancelEdit={handleOnCancelEdit}
         />
-      </Col>
+      </div>
     );
   });
 
   return (
     <Content>
-      <Row gutter={16} justify="space-around" className={styles.widgetListRow}>
-        {noteWidgets}
-      </Row>
+      <div className={styles.Grid}>
+        <ListManager
+          items={notes}
+          direction="horizontal"
+          maxItems={3}
+          render={(note) => (
+            <div className={styles.GridItem}>
+              <NoteWidget
+                key={note.id}
+                note={note}
+                isBeingEdited={editedNoteId === note.id ? true : false}
+                onDelete={onDelete}
+                onStartEdit={handleOnStartEdit}
+                onFinishEdit={handleOnFinishEdit}
+                onCancelEdit={handleOnCancelEdit}
+              />
+            </div>
+          )}
+          onDragEnd={handleOnDragEnd}
+        />
+      </div>
       <FloatingButton onClick={onAdd} />
     </Content>
   );
